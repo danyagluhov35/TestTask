@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/index.css">
+    <title>Document</title>
+</head>
+<body>
+    <form class="send-form">
+        <input type="submit" class="send-btn" value="Отрпавить">
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+    <script>
+        let dataMouse = []
+
+        // При событии мыши
+        $(document).on("mousemove", async function(e){
+            dataMouse.push({
+                xData : e.clientX,
+                yData : e.clientY
+            })
+        })
+
+        // При нажатии на кнопку "Отправить"
+        $(document).on("submit", ".send-form", async function(e){
+           e.preventDefault()
+            const response = await fetch("/Home/SaveData", {
+                method : "POST",
+                headers : {"Content-Type" : "application/json"},
+                body : JSON.stringify({MouseDataModels : dataMouse})
+            })
+        })
+    </script>
+</body>
+</html>
